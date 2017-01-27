@@ -18,7 +18,7 @@ public class Echiquier {
     public Piece getPiece(Position p){
         for (Piece piece: echec
              ) {
-            if(piece.getPosition() == p){
+            if(piece.memePosition(p)){
                 return piece;
             }
         }
@@ -53,11 +53,9 @@ public class Echiquier {
         for ( int i =0;i <8; i++){
             System.out.print(i+" | ");
             for (int j=0;j <8; j++){
-                System.out.print(getPiece(plateau[indice]));
                 if(getPiece(plateau[indice]) == null) {
                     System.out.print("  | ");
                 }else{
-                    System.out.println("test");
                     System.out.print(getPiece(plateau[indice]).getSymbole()+" | ");
 
                 }

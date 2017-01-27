@@ -21,6 +21,7 @@ public class Main {
         echec.ajouterPiece(p);
         echec.ajouterPiece(r);
 
+        System.out.println(echec.getPiece(p2));
         echec.afficher();
     }
 }

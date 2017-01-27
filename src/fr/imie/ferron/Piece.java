@@ -22,6 +22,9 @@ public abstract class Piece {
     public Position getPosition() {
         return position;
     }
+    public boolean memePosition(Position pos){
+        return position.getX() == pos.getX() && position.getY()==pos.getY();
+    }
 
     public void setPosition(Position position) {
         this.position = position;
@@ -39,7 +42,7 @@ public abstract class Piece {
     public String toString() {
         return "Piece: "+
                 getSymbole()+
-                ", position: " + getPosition() +
+                ", position: " + position.getX()+", " +position.getY()+
                 ", couleur: " + getCouleur() + '\'' +
                 '}';
     }
