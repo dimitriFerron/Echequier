@@ -1,7 +1,5 @@
 package fr.imie.ferron;
 
-import java.util.ArrayList;
-
 /**
  * Created by ferron.cdi04 on 27/01/2017.
  */
@@ -15,17 +13,20 @@ public class Main {
         Pion p = new Pion(p3,Couleur.NOIR);
 
 
+        try {
 
-        Echiquier echec = new Echiquier();
-        echec.ajouterPiece(d);
-        echec.ajouterPiece(p);
-        echec.ajouterPiece(r);
-        echec.afficher();
-        p.deplacement(new Position(5,4));
-        echec.supprimerPiece(p);
-        echec.ajouterPiece(p);
-        echec.afficher();
-//        echec.afficher();
+            Echiquier.getInstance().ajouterPiece(d);
+            Echiquier.getInstance().ajouterPiece(p);
+            Echiquier.getInstance().ajouterPiece(r);
+            Echiquier.getInstance().afficher();
+            System.out.println(Echiquier.getInstance().getPoints(Couleur.BLANC));
+            System.out.println(Echiquier.getInstance().getPoints(Couleur.NOIR));
+//            p.deplacement(new Position(7, 4));
+//            echec.supprimerPiece(p);
+//            echec.ajouterPiece(p);
+//            echec.afficher();
+        }catch (ExceptionPosition e){}
+
 
     }
 }

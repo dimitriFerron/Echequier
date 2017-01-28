@@ -4,20 +4,29 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Created by ferron.cdi04 on 27/01/2017.
+ * Created by ferron on 28/01/2017.
  */
 public class Echiquier implements Serializable{
+    private static Echiquier ourInstance = new Echiquier();
     private ArrayList<Piece> echec = new ArrayList<Piece>();
 
-    public Echiquier() {
-        this.echec = echec;
+    public static Echiquier getInstance() {
+        return ourInstance;
     }
-    public void ajouterPiece(Piece p){
-        echec.add(p);
+
+    private Echiquier() {
+    }
+    public void ajouterPiece(Piece p)throws ExceptionPosition{
+        if(p.getPosition().getX() >= 1 && p.getPosition().getX() <=8 && p.getPosition().getY() <=8 && p.getPosition().getY()>=1) {
+            echec.add(p);
+        } else{
+            throw new ExceptionPosition();
+        }
+
     }
     public Piece getPiece(Position p){
         for (Piece piece: echec
-             ) {
+                ) {
             if(piece.memePosition(p)){
                 return piece;
             }
@@ -30,7 +39,7 @@ public class Echiquier implements Serializable{
     public int getPoints(Couleur couleur){
         int points = 0;
         for (Piece piece: echec
-             ) {
+                ) {
             if(piece.getCouleur() == couleur){
                 points += piece.getValeur();
             }
@@ -43,19 +52,19 @@ public class Echiquier implements Serializable{
     public void afficher(){
         Position plateau[] = new Position[64];
         int indice=0;
-        for ( int i =0;i <8; i++){
-            for (int j=0;j <8; j++){
+        for ( int i =1;i <9; i++){
+            for (int j=1;j <9; j++){
                 plateau[indice] = new Position(i,j);
                 indice++;
             }
         }
         indice = 0;
-        System.out.println("   | A | B | C | D | E | F | G | H |");
+        System.out.println("  | A | B | C | D | E | F | G | H |");
         System.out.print(afficherInterligne());
 
-        for ( int i =0;i <8; i++){
+        for ( int i =1;i <9; i++){
             System.out.print(i+" | ");
-            for (int j=0;j <8; j++){
+            for (int j=1;j <9; j++){
                 if(getPiece(plateau[indice]) == null) {
                     System.out.print("  | ");
                 }else{
@@ -88,7 +97,7 @@ public class Echiquier implements Serializable{
             }
         };
 
-        }
+    }
     public void chargement() {
         ObjectInputStream objectInputStream = null;
 

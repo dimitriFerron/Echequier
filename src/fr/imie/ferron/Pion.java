@@ -9,23 +9,28 @@ public class Pion extends Piece{
     }
 
     public boolean positionPossible(Position position) throws ExceptionPosition{
+        //TODO Exceptions mouvement diagonale et impossible en avant!
         Position pos = new Position(0,0);
-        if(this.getCouleur() == Couleur.BLANC){
-            pos.setX(position.getX()+1);
-            pos.setY(position.getY());
-            if(this.memePosition(pos)){
-                return true;
-            }
-        } else {
-            if(this.getCouleur() == Couleur.NOIR){
-                pos.setX(position.getX()-1);
-                pos.setY(position.getY());
-                if(this.memePosition(pos)){
-                    return true;
+        if(position.getX() >= 1 && position.getX() <=8 && position.getY() <=8 && position.getY()>=1) {
+            if(Echiquier.getInstance().getPiece(position) != null) {
+                if (this.getCouleur() == Couleur.BLANC) {
+                    pos.setX(position.getX() + 1);
+                    pos.setY(position.getY());
+                    if (this.memePosition(pos)) {
+                        return true;
+                    }
+                } else {
+                    if (this.getCouleur() == Couleur.NOIR) {
+                        pos.setX(position.getX() - 1);
+                        pos.setY(position.getY());
+                        if (this.memePosition(pos)) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
-        return false;
+        throw new ExceptionPosition();
     }
     @Override
     public String getSymbole() {
