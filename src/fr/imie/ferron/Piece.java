@@ -23,7 +23,7 @@ public abstract class Piece {
         return position;
     }
     public boolean memePosition(Position pos){
-        return position.getX() == pos.getX() && position.getY()==pos.getY();
+        return this.getPosition().getX() == pos.getX() && this.getPosition().getY()==pos.getY();
     }
 
     public void setPosition(Position position) {
