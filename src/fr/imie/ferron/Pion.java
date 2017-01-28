@@ -13,13 +13,13 @@ public class Pion extends Piece{
             if(Echiquier.getInstance().getPiece(position) == null) {
 
                 if (this.getCouleur() == Couleur.BLANC) {
-                    Position pos = new Position(position.getX()+1,position.getY());
+                    Position pos = new Position(position.getY()+1,position.getX());
                     if (this.memePosition(pos)) {
                         return true;
                     }
                 } else {
                     if (this.getCouleur() == Couleur.NOIR) {
-                        Position pos = new Position(position.getX()-1,position.getY());
+                        Position pos = new Position(position.getY()-1,position.getX());
                         if (this.memePosition(pos)) {
                             return true;
                         }
@@ -28,8 +28,8 @@ public class Pion extends Piece{
             }
             else{
                 if (this.getCouleur() == Couleur.BLANC) {
-                    Position posTempo = new Position(position.getX() + 1,position.getY()+1);
-                    Position posTempo2 = new Position(position.getX() + 1,position.getY()-1);
+                    Position posTempo = new Position(position.getY() + 1,position.getX()+1);
+                    Position posTempo2 = new Position(position.getY() + 1,position.getX()-1);
                     if(this.memePosition(posTempo) || this.memePosition(posTempo2)) {
                         System.out.println(posTempo.toString()+"   "+ posTempo2.toString()+"   "+position.toString()+"   "+this.getPosition().toString());
                         if (Echiquier.getInstance().getPiece(position) != null && Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()) {
@@ -39,8 +39,8 @@ public class Pion extends Piece{
                     }
                 } else {
                     if (this.getCouleur() == Couleur.NOIR) {
-                        Position posTempo = new Position(position.getX() - 1,position.getY()+1);
-                        Position posTempo2 = new Position(position.getX() - 1,position.getY()-1);
+                        Position posTempo = new Position(position.getY() - 1,position.getX()+1);
+                        Position posTempo2 = new Position(position.getY() - 1,position.getX()-1);
                         if((this.memePosition(posTempo) || this.memePosition(posTempo2)) && Echiquier.getInstance().getPiece(position) !=null
                                 && Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()){
                             Echiquier.getInstance().supprimerPiece(Echiquier.getInstance().getPiece(position));

@@ -10,12 +10,14 @@ public class Roi extends Piece{
     }
     @Override
     public boolean positionPossible(Position position) throws ExceptionPosition {
-        if(Math.abs(position.getX()-this.getPosition().getX())<2 && Math.abs(position.getY() - this.getPosition().getY()) < 2){
-            if(Echiquier.getInstance().getPiece(position) ==null){
-                return true;
-            } else {
-                if(Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()){
+        if(position.getX() >= 1 && position.getX() <=8 && position.getY() <=8 && position.getY()>=1) {
+            if (Math.abs(position.getX() - this.getPosition().getX()) < 2 && Math.abs(position.getY() - this.getPosition().getY()) < 2) {
+                if (Echiquier.getInstance().getPiece(position) == null) {
                     return true;
+                } else {
+                    if (Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()) {
+                        return true;
+                    }
                 }
             }
         }
