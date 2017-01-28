@@ -8,16 +8,16 @@ import fr.imie.ferron.Position;
 public abstract class Piece {
 
     private Position position;
-    private char couleur;
+    private Couleur couleur;
 
-    public Piece(Position position, char couleur) {
+    public Piece(Position position, Couleur couleur) {
         this.position = position;
         this.couleur = couleur;
     }
-    public abstract boolean positionPossible(Position position);
+    public abstract boolean positionPossible(Position position) throws ExceptionPosition;
     public abstract String getSymbole();
     public abstract int getValeur();
-    public abstract void deplacement(Position position);
+    public abstract void deplacement(Position position) throws ExceptionPosition;
 
     public Position getPosition() {
         return position;
@@ -27,15 +27,12 @@ public abstract class Piece {
     }
 
     public void setPosition(Position position) {
-        this.position = position;
+        this.position.setX(position.getX());
+        this.position.setY(position.getY());
     }
 
-    public char getCouleur() {
+    public Couleur getCouleur() {
         return couleur;
-    }
-
-    public void setCouleur(char couleur) {
-        this.couleur = couleur;
     }
 
     @Override

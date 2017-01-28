@@ -6,13 +6,13 @@ import java.util.ArrayList;
  * Created by ferron.cdi04 on 27/01/2017.
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExceptionPosition {
         Position p1 = new Position(1,2);
         Position p2 = new Position(5,2);
         Position p3 = new Position(4,4);
-        Dame d = new Dame(p1,'N');
-        Roi r = new Roi(p2,'N');
-        Pion p = new Pion(p3,'N');
+        Dame d = new Dame(p1,Couleur.BLANC);
+        Roi r = new Roi(p2,Couleur.NOIR);
+        Pion p = new Pion(p3,Couleur.NOIR);
 
 
 
@@ -20,8 +20,12 @@ public class Main {
         echec.ajouterPiece(d);
         echec.ajouterPiece(p);
         echec.ajouterPiece(r);
-
-        System.out.println(echec.getPiece(p2));
         echec.afficher();
+        p.deplacement(new Position(5,4));
+        echec.supprimerPiece(p);
+        echec.ajouterPiece(p);
+        echec.afficher();
+//        echec.afficher();
+
     }
 }

@@ -4,7 +4,7 @@ package fr.imie.ferron;
  * Created by ferron.cdi04 on 27/01/2017.
  */
 public class Dame extends Piece{
-    public Dame(Position position, char couleur) {
+    public Dame(Position position, Couleur couleur) {
         super(position, couleur);
     }
     @Override

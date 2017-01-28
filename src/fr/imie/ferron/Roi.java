@@ -5,7 +5,7 @@ package fr.imie.ferron;
  */
 public class Roi extends Piece{
 
-    public Roi(Position position, char couleur) {
+    public Roi(Position position, Couleur couleur) {
         super(position, couleur);
     }
     @Override

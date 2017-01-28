@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by ferron.cdi04 on 27/01/2017.
  */
-public class Echiquier {
+public class Echiquier implements Serializable{
     private ArrayList<Piece> echec = new ArrayList<Piece>();
 
     public Echiquier() {
@@ -24,7 +24,10 @@ public class Echiquier {
         }
         return null;
     }
-    public int getPoints(char couleur){
+    public void supprimerPiece(Piece p ){
+        echec.remove(p);
+    }
+    public int getPoints(Couleur couleur){
         int points = 0;
         for (Piece piece: echec
              ) {
