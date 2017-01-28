@@ -7,6 +7,9 @@ public class ExceptionPosition extends Exception{
     public ExceptionPosition(){
         System.out.println("Mouvement impossible");
     }
+    public ExceptionPosition(String message){
+        System.out.println(message);
+    }
 
 
 }

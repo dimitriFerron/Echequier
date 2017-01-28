@@ -17,12 +17,16 @@ public class Echiquier implements Serializable{
     private Echiquier() {
     }
     public void ajouterPiece(Piece p)throws ExceptionPosition{
-        if(p.getPosition().getX() >= 1 && p.getPosition().getX() <=8 && p.getPosition().getY() <=8 && p.getPosition().getY()>=1) {
-            echec.add(p);
+        if(p.getPosition().getX() >= 1 && p.getPosition().getX() <=8
+                && p.getPosition().getY() <=8 && p.getPosition().getY()>=1) {
+            if(Echiquier.getInstance().getPiece(p.getPosition()) == null){
+                echec.add(p);
+            } else {
+                throw new ExceptionPosition("Une pièce est déjà à cette emplacement");
+            }
         } else{
             throw new ExceptionPosition();
         }
-
     }
     public Piece getPiece(Position p){
         for (Piece piece: echec
@@ -77,7 +81,7 @@ public class Echiquier implements Serializable{
             System.out.print(afficherInterligne());
         }
     }
-    public void sauvegarder(){
+    public void sauvegarder()throws IOException{
         ObjectOutputStream objectOutputStream = null;
 
         try{
@@ -98,7 +102,7 @@ public class Echiquier implements Serializable{
         };
 
     }
-    public void chargement() {
+    public void chargement() throws  IOException{
         ObjectInputStream objectInputStream = null;
 
 //        try{

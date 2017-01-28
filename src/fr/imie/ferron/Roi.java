@@ -9,8 +9,17 @@ public class Roi extends Piece{
         super(position, couleur);
     }
     @Override
-    public boolean positionPossible(Position position) {
-        return false;
+    public boolean positionPossible(Position position) throws ExceptionPosition {
+        if(Math.abs(position.getX()-this.getPosition().getX())<2 && Math.abs(position.getY() - this.getPosition().getY()) < 2){
+            if(Echiquier.getInstance().getPiece(position) ==null){
+                return true;
+            } else {
+                if(Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()){
+                    return true;
+                }
+            }
+        }
+        throw new ExceptionPosition();
     }
     @Override
     public String getSymbole() {
@@ -21,7 +30,7 @@ public class Roi extends Piece{
         return 20;
     }
     @Override
-    public void deplacement(Position position) {
+    public void deplacement(Position position) throws ExceptionPosition {
         if(positionPossible(position)){
             this.setPosition(position);
         }
