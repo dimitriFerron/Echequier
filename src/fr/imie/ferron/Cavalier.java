@@ -10,14 +10,14 @@ public class Cavalier extends Piece{
     @Override
     public boolean positionPossible(Position position) throws ExceptionPosition {
         // toutes les positions possible par apport à celle d'avant
-        Position p1 = new Position(this.getPosition().getY()-1,this.getPosition().getX()-2);
-        Position p2 = new Position(this.getPosition().getY()+1,this.getPosition().getX()-2);
-        Position p3 = new Position(this.getPosition().getY()+2,this.getPosition().getX()-1);
-        Position p4 = new Position(this.getPosition().getY()-2,this.getPosition().getX()-1);
-        Position p5 = new Position(this.getPosition().getY()+1,this.getPosition().getX()+2);
-        Position p6 = new Position(this.getPosition().getY()-1,this.getPosition().getX()+2);
-        Position p7 = new Position(this.getPosition().getY()+2,this.getPosition().getX()+1);
-        Position p8 = new Position(this.getPosition().getY()-2,this.getPosition().getX()+1);
+        Position p1 = new Position(position.getY()-1,position.getX()-2);
+        Position p2 = new Position(position.getY()+1,position.getX()-2);
+        Position p3 = new Position(position.getY()+2,position.getX()-1);
+        Position p4 = new Position(position.getY()-2,position.getX()-1);
+        Position p5 = new Position(position.getY()+1,position.getX()+2);
+        Position p6 = new Position(position.getY()-1,position.getX()+2);
+        Position p7 = new Position(position.getY()+2,position.getX()+1);
+        Position p8 = new Position(position.getY()-2,position.getX()+1);
         if(position.getX() >= 1 && position.getX() <=8 && position.getY() <=8 && position.getY()>=1) { //Vérification nom sorti du plateau
             if(Echiquier.getInstance().getPiece(position)!= null) {
                 if (Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()) { //Si la pièce est de l'autre couleur

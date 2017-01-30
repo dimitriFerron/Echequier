@@ -12,10 +12,10 @@ public class Main {
 //        Pion pB5 = new Pion(new Position(2, 2), Couleur.NOIR);
 //        Pion pB3 = new Pion(new Position(2, 3), Couleur.NOIR);
         Cavalier c1 = new Cavalier(new Position(4,4),Couleur.NOIR);
-        Pion pB2 = new Pion(new Position(6, 4), Couleur.BLANC);
+        Pion pB2 = new Pion(new Position(2, 5), Couleur.BLANC);
 //        Pion pB3 = new Pion(new Position(4, 5), Couleur.NOIR);
 //        Roi r = new Roi(new Position(4,4),Couleur.NOIR);
-        Pion pB1 = new Pion(new Position(3, 3), Couleur.BLANC);
+        Pion pB1 = new Pion(new Position(2, 3), Couleur.NOIR);
         try {
             Echiquier.getInstance().ajouterPiece(c1);
             Echiquier.getInstance().ajouterPiece(pB1);
