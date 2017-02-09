@@ -2,10 +2,12 @@ package fr.imie.ferron;
 
 import fr.imie.ferron.Position;
 
+import java.io.Serializable;
+
 /**
  * Created by ferron.cdi04 on 27/01/2017.
  */
-public abstract class Piece {
+public abstract class Piece implements Serializable{
 
     private Position position;
     private Couleur couleur;

@@ -2,6 +2,7 @@ package fr.imie.ferron;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by ferron on 28/01/2017.
@@ -105,20 +106,22 @@ public class Echiquier implements Serializable{
     public void chargement() throws  IOException{
         ObjectInputStream objectInputStream = null;
 
-//        try{
-//            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("Echequier.txt"))));
-//            this.echec.addAll((echec)objectInputStream.readObject());
-//            objectInputStream.close();
-//
-//        } catch (IOException e){
-//            System.out.println("Chargement fail");
-//        } finally {
-//            try {
-//                objectInputStream.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        };
+        try{
+            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("Echequier.txt"))));
+            echec.addAll((Piece)objectInputStream.readObject());
+            objectInputStream.close();
+
+        } catch (IOException e){
+            System.out.println("Chargement fail");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                objectInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
 
     }
 }

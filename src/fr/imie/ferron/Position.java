@@ -1,9 +1,11 @@
 package fr.imie.ferron;
 
+import java.io.Serializable;
+
 /**
  * Created by ferron.cdi04 on 27/01/2017.
  */
-public class Position {
+public class Position implements Serializable{
     private int x;
     private int y;
     public Position(int y, int x){
