@@ -26,9 +26,10 @@ public class Main {
 //            pB1.deplacement(new Position(2,3));
             Echiquier.getInstance().afficher();
             d1.deplacement(new Position(8,4));
-            Echiquier.getInstance().afficher();
+
             Echiquier.getInstance().sauvegarder();
             Echiquier.getInstance().chargement();
+            Echiquier.getInstance().afficher();
 
         }catch (ExceptionPosition | IOException e){
             System.out.println("Exception");

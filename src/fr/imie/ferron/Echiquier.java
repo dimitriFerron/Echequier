@@ -108,7 +108,7 @@ public class Echiquier implements Serializable{
 
         try{
             objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("Echequier.txt"))));
-            echec.addAll((Piece)objectInputStream.readObject());
+            echec.addAll((ArrayList)objectInputStream.readObject());
             objectInputStream.close();
 
         } catch (IOException e){
