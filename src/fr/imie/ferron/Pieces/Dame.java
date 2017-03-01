@@ -1,4 +1,8 @@
-package fr.imie.ferron;
+package fr.imie.ferron.Pieces;
+
+import fr.imie.ferron.Echiquier.Case;
+import fr.imie.ferron.Echiquier.Echiquier;
+import fr.imie.ferron.Exceptions.ExceptionPosition;
 
 /**
  * Created by ferron.cdi04 on 27/01/2017.
@@ -8,7 +12,7 @@ public class Dame extends Piece{
         super(position, couleur);
     }
     @Override
-    public boolean positionPossible(Position position) throws ExceptionPosition{
+    public boolean positionPossible(Position position) throws ExceptionPosition {
         if(position.getX() >= 1 && position.getX() <=8 && position.getY() <=8 && position.getY()>=1) { //Vérification nom sorti du plateau
 
             if(this.getPosition().getX() != position.getX() && this.getPosition().getY() == position.getY()){
@@ -55,9 +59,15 @@ public class Dame extends Piece{
         return 9;
     }
     @Override
-    public void deplacement(Position position) throws ExceptionPosition {
-        if(positionPossible(position)){
-            this.setPosition(position);
+    public void deplacement(Case btn) throws ExceptionPosition{
+        if(positionPossible(btn.getPos())){
+            this.setPosition(btn.getPos());
+            btn.setText(btn.getPiece().getSymbole());
         }
+    }
+
+    @Override
+    public void positions() {
+
     }
 }

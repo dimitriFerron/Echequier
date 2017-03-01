@@ -1,4 +1,4 @@
-package fr.imie.ferron;
+package fr.imie.ferron.Pieces;
 
 import java.io.Serializable;
 

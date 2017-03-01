@@ -1,4 +1,4 @@
-package fr.imie.ferron;
+package fr.imie.ferron.Exceptions;
 
 /**
  * Created by ferron on 28/01/2017.

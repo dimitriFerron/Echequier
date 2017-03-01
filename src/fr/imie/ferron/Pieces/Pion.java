@@ -1,4 +1,10 @@
-package fr.imie.ferron;
+package fr.imie.ferron.Pieces;
+
+import fr.imie.ferron.Echiquier.Case;
+import fr.imie.ferron.Echiquier.Echiquier;
+import fr.imie.ferron.Exceptions.ExceptionPosition;
+
+import java.util.ArrayList;
 
 /**
  * Created by ferron.cdi04 on 27/01/2017.
@@ -7,20 +13,34 @@ public class Pion extends Piece{
     public Pion(Position position, Couleur couleur) {
         super(position,couleur);
     }
-
-    public boolean positionPossible(Position position) throws ExceptionPosition{
+    public void positions(){
+        if (this.getCouleur() == Couleur.BLANC) {
+            this.getPositionsPossible().add(new Position(this.getPosition().getY()+1,this.getPosition().getX()));
+            if(this.getPosition().getY()==2){
+                this.getPositionsPossible().add(new Position(this.getPosition().getY()+2,this.getPosition().getX()));
+            }
+        } else {
+            this.getPositionsPossible().add(new Position(this.getPosition().getY()-1,this.getPosition().getX()));
+            if(this.getPosition().getY()==7){
+                this.getPositionsPossible().add(new Position(this.getPosition().getY()-2,this.getPosition().getX()));
+            }
+        }
+    }
+    public boolean positionPossible(Position position) throws ExceptionPosition {
         if(position.getX() >= 1 && position.getX() <=8 && position.getY() <=8 && position.getY()>=1) {
             if(Echiquier.getInstance().getPiece(position) == null) {
-
+                System.out.println(this.getCouleur());
                 if (this.getCouleur() == Couleur.BLANC) {
-                    Position pos = new Position(position.getY()+1,position.getX());
-                    if (this.memePosition(pos)) {
+                    Position pos = new Position(position.getY()-1,position.getX());
+                    System.out.println(this.memePosition(pos));
+                    if (this.memePosition(pos) || this.memePosition(new Position(position.getY()-2,position.getX()))) {
+                        System.out.println();
                         return true;
                     }
                 } else {
                     if (this.getCouleur() == Couleur.NOIR) {
-                        Position pos = new Position(position.getY()-1,position.getX());
-                        if (this.memePosition(pos)) {
+                        Position pos = new Position(position.getY()+1,position.getX());
+                        if (this.memePosition(pos) && this.memePosition(new Position(position.getY()+2,position.getX()))) {
                             return true;
                         }
                     }
@@ -61,9 +81,13 @@ public class Pion extends Piece{
         return 1;
     }
     @Override
-    public void deplacement(Position position) throws ExceptionPosition{
-        if(positionPossible(position)){
-            this.setPosition(position);
+    public void deplacement(Case btn) throws ExceptionPosition{
+        if(positionPossible(btn.getPos())){
+            this.setPosition(btn.getPos());
+//            System.out.println(btn.getPos());
+//            System.out.println(this.getPosition());
+            btn.setText(this.getSymbole());
+            System.out.println(btn.getText());
         }
     }
 }
