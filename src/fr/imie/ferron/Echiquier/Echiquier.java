@@ -163,15 +163,9 @@ public class Echiquier extends JFrame implements Serializable {
         }
     }
     public void afficherGrille(Case button[]){
-//        this.removeAll();
         int indiceColor = 0;
         for (int i =1;i <9; i++){
             for (int j=1;j <9; j++) {
-                if(button[indiceColor].getPiece() != null) {
-                    button[indiceColor].setText(button[indiceColor].getPiece().getSymbole());
-                } else{
-                    button[indiceColor].setText("");
-                }
                 if (indiceColor % 2 == 0) {
                     button[indiceColor].setBackground(Color.DARK_GRAY);
                     if (i % 2 == 0) {
@@ -187,8 +181,6 @@ public class Echiquier extends JFrame implements Serializable {
 
             }
         }
-        this.repaint();
-        this.revalidate();
     }
     public void sauvegarder()throws IOException{
         ObjectOutputStream objectOutputStream = null;
@@ -235,5 +227,18 @@ public class Echiquier extends JFrame implements Serializable {
 
     public Case[] getButton() {
         return button;
+    }
+    public void refresh(Case btn){
+        this.repaint();
+        this.revalidate();
+        afficherGrille(Echiquier.getInstance().getButton());
+        if(getPoints(Couleur.BLANC) == 0){
+            JOptionPane win = new JOptionPane();
+            win.showMessageDialog(null,Couleur.BLANC+"Vous avez gagné !","Win",win.INFORMATION_MESSAGE);
+        }
+        if(getPoints(Couleur.NOIR) == 0){
+            JOptionPane win = new JOptionPane();
+            win.showMessageDialog(null,Couleur.NOIR+"Vous avez gagné !","Win",win.INFORMATION_MESSAGE);
+        }
     }
 }

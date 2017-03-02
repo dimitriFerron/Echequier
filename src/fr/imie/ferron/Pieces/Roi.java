@@ -39,12 +39,12 @@ public class Roi extends Piece{
     public void deplacement(Case btn) throws ExceptionPosition{
         if(positionPossible(btn.getPos())){
             this.setPosition(btn.getPos());
-            btn.setText(btn.getPiece().getSymbole());
+            btn.setText(this.getSymbole());
         }
     }
 
     @Override
     public void positions() {
-
+        Position pos = new Position(this.getPosition().getY(),this.getPosition().getX());
     }
 }

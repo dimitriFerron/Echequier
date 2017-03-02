@@ -14,25 +14,46 @@ public class Pion extends Piece{
         super(position,couleur);
     }
     public void positions(){
+        Position pos;
         if (this.getCouleur() == Couleur.BLANC) {
-            this.getPositionsPossible().add(new Position(this.getPosition().getY()+1,this.getPosition().getX()));
-            if(this.getPosition().getY()==2){
-                this.getPositionsPossible().add(new Position(this.getPosition().getY()+2,this.getPosition().getX()));
+            pos = new Position(this.getPosition().getY()+1,this.getPosition().getX());
+            if(Echiquier.getInstance().getPiece(pos) == null) {
+                this.getPositionsPossible().add(pos);
+                if (this.getPosition().getY() == 2) {
+                    this.getPositionsPossible().add(new Position(this.getPosition().getY() + 2, this.getPosition().getX()));
+                }
+            }
+            pos = new Position(this.getPosition().getY()+1,this.getPosition().getX()+1);
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+                    this.getPositionsPossible().add(pos);
+            }
+            pos = new Position(this.getPosition().getY()+1,this.getPosition().getX()-1);
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+                this.getPositionsPossible().add(pos);
             }
         } else {
-            this.getPositionsPossible().add(new Position(this.getPosition().getY()-1,this.getPosition().getX()));
-            if(this.getPosition().getY()==7){
-                this.getPositionsPossible().add(new Position(this.getPosition().getY()-2,this.getPosition().getX()));
+            pos =new Position(this.getPosition().getY()-1,this.getPosition().getX());
+            if(Echiquier.getInstance().getPiece(pos) == null) {
+                this.getPositionsPossible().add(pos);
+                if (this.getPosition().getY() == 7) {
+                    this.getPositionsPossible().add(new Position(this.getPosition().getY() - 2, this.getPosition().getX()));
+                }
+            }
+            pos = new Position(this.getPosition().getY()-1,this.getPosition().getX()+1);
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+                this.getPositionsPossible().add(pos);
+            }
+            pos = new Position(this.getPosition().getY()-1,this.getPosition().getX()-1);
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+                this.getPositionsPossible().add(pos);
             }
         }
     }
     public boolean positionPossible(Position position) throws ExceptionPosition {
         if(position.getX() >= 1 && position.getX() <=8 && position.getY() <=8 && position.getY()>=1) {
             if(Echiquier.getInstance().getPiece(position) == null) {
-                System.out.println(this.getCouleur());
                 if (this.getCouleur() == Couleur.BLANC) {
                     Position pos = new Position(position.getY()-1,position.getX());
-                    System.out.println(this.memePosition(pos));
                     if (this.memePosition(pos) || this.memePosition(new Position(position.getY()-2,position.getX()))) {
                         System.out.println();
                         return true;
@@ -40,7 +61,7 @@ public class Pion extends Piece{
                 } else {
                     if (this.getCouleur() == Couleur.NOIR) {
                         Position pos = new Position(position.getY()+1,position.getX());
-                        if (this.memePosition(pos) && this.memePosition(new Position(position.getY()+2,position.getX()))) {
+                        if (this.memePosition(pos) || this.memePosition(new Position(position.getY()+2,position.getX()))) {
                             return true;
                         }
                     }
@@ -48,10 +69,9 @@ public class Pion extends Piece{
             }
             else{
                 if (this.getCouleur() == Couleur.BLANC) {
-                    Position posTempo = new Position(position.getY() + 1,position.getX()+1);
-                    Position posTempo2 = new Position(position.getY() + 1,position.getX()-1);
+                    Position posTempo = new Position(position.getY() - 1,position.getX()+1);
+                    Position posTempo2 = new Position(position.getY() - 1,position.getX()-1);
                     if(this.memePosition(posTempo) || this.memePosition(posTempo2)) {
-                        System.out.println(posTempo.toString()+"   "+ posTempo2.toString()+"   "+position.toString()+"   "+this.getPosition().toString());
                         if (Echiquier.getInstance().getPiece(position) != null && Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()) {
                             Echiquier.getInstance().supprimerPiece(Echiquier.getInstance().getPiece(position));
                             return true;
@@ -59,8 +79,8 @@ public class Pion extends Piece{
                     }
                 } else {
                     if (this.getCouleur() == Couleur.NOIR) {
-                        Position posTempo = new Position(position.getY() - 1,position.getX()+1);
-                        Position posTempo2 = new Position(position.getY() - 1,position.getX()-1);
+                        Position posTempo = new Position(position.getY() + 1,position.getX()+1);
+                        Position posTempo2 = new Position(position.getY() + 1,position.getX()-1);
                         if((this.memePosition(posTempo) || this.memePosition(posTempo2)) && Echiquier.getInstance().getPiece(position) !=null
                                 && Echiquier.getInstance().getPiece(position).getCouleur() != this.getCouleur()){
                             Echiquier.getInstance().supprimerPiece(Echiquier.getInstance().getPiece(position));
@@ -83,11 +103,11 @@ public class Pion extends Piece{
     @Override
     public void deplacement(Case btn) throws ExceptionPosition{
         if(positionPossible(btn.getPos())){
+            Position pos = new Position(this.getPosition().getY(),this.getPosition().getX());
             this.setPosition(btn.getPos());
-//            System.out.println(btn.getPos());
-//            System.out.println(this.getPosition());
+            btn.setPiece(this);
             btn.setText(this.getSymbole());
-            System.out.println(btn.getText());
+
         }
     }
 }

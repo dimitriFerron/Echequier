@@ -52,12 +52,31 @@ public class Cavalier extends Piece{
     public void deplacement(Case btn) throws ExceptionPosition{
         if(positionPossible(btn.getPos())){
             this.setPosition(btn.getPos());
-            btn.setText(btn.getPiece().getSymbole());
+            btn.setPiece(this);
+            btn.setText(this.getSymbole());
         }
     }
 
     @Override
     public void positions() {
+        Position positions[] = new Position[8];
+        positions[0] = new Position(this.getPosition().getY()-1,this.getPosition().getX()-2);
+        positions[1] = new Position(this.getPosition().getY()+1,this.getPosition().getX()-2);
+        positions[2] = new Position(this.getPosition().getY()+2,this.getPosition().getX()-1);
+        positions[3] = new Position(this.getPosition().getY()-2,this.getPosition().getX()-1);
+        positions[4] = new Position(this.getPosition().getY()+1,this.getPosition().getX()+2);
+        positions[5] = new Position(this.getPosition().getY()-1,this.getPosition().getX()+2);
+        positions[6] = new Position(this.getPosition().getY()+2,this.getPosition().getX()+1);
+        positions[7] = new Position(this.getPosition().getY()-2,this.getPosition().getX()+1);
+        for (Position pos: positions) {
+            if(Echiquier.getInstance().getPiece(pos) == null){
+                this.getPositionsPossible().add(pos);
+            }
+            if(Echiquier.getInstance().getPiece(pos) != null && !Echiquier.getInstance().getPiece(pos).getCouleur().equals(this.getCouleur())){
+                this.getPositionsPossible().add(pos);
+            }
+        }
+
 
     }
 }
