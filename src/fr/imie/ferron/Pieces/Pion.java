@@ -24,11 +24,11 @@ public class Pion extends Piece{
                 }
             }
             pos = new Position(this.getPosition().getY()+1,this.getPosition().getX()+1);
-            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos).getCouleur())) {
                     this.getPositionsPossible().add(pos);
             }
             pos = new Position(this.getPosition().getY()+1,this.getPosition().getX()-1);
-            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos).getCouleur())) {
                 this.getPositionsPossible().add(pos);
             }
         } else {
@@ -40,11 +40,11 @@ public class Pion extends Piece{
                 }
             }
             pos = new Position(this.getPosition().getY()-1,this.getPosition().getX()+1);
-            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos).getCouleur())) {
                 this.getPositionsPossible().add(pos);
             }
             pos = new Position(this.getPosition().getY()-1,this.getPosition().getX()-1);
-            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos))) {
+            if(Echiquier.getInstance().getPiece(pos) != null && !this.getCouleur().equals(Echiquier.getInstance().getPiece(pos).getCouleur())) {
                 this.getPositionsPossible().add(pos);
             }
         }
@@ -103,8 +103,8 @@ public class Pion extends Piece{
     @Override
     public void deplacement(Case btn) throws ExceptionPosition{
         if(positionPossible(btn.getPos())){
-            Position pos = new Position(this.getPosition().getY(),this.getPosition().getX());
             this.setPosition(btn.getPos());
+            System.out.println(this.getPosition());
             btn.setPiece(this);
             btn.setText(this.getSymbole());
 

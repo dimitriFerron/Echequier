@@ -29,6 +29,14 @@ public class Case extends JButton{
         this.piece = piece;
     }
 
+    public void setPos(Position pos) {
+        this.pos = pos;
+    }
+    public void initialize(){
+        this.piece = null;
+        this.setText("");
+    }
+
     public Position getPos(){
         return pos;
     }

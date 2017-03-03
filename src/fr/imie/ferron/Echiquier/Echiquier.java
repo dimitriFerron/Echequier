@@ -19,7 +19,6 @@ public class Echiquier extends JFrame implements Serializable {
     public static Echiquier getInstance() {
         return ourInstance;
     }
-
     private Echiquier() {
         echec = new ArrayList<>();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -224,14 +223,15 @@ public class Echiquier extends JFrame implements Serializable {
         };
 
     }
-
     public Case[] getButton() {
         return button;
     }
     public void refresh(Case btn){
+        int r = 0;
         this.repaint();
         this.revalidate();
         afficherGrille(Echiquier.getInstance().getButton());
+
         if(getPoints(Couleur.BLANC) == 0){
             JOptionPane win = new JOptionPane();
             win.showMessageDialog(null,Couleur.BLANC+"Vous avez gagné !","Win",win.INFORMATION_MESSAGE);

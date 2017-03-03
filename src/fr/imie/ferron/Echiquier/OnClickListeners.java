@@ -18,11 +18,12 @@ public class OnClickListeners implements ActionListener{
     private Case btn;
     private Case btnClick;
     private Piece pieceClick;
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         btn = ((Case)actionEvent.getSource());
         button = Echiquier.getInstance().getButton();
-        if(btn.getPiece() != null && btnClick==null){
+        if(btn.getPiece() != null && (btnClick==null || pieceClick.getCouleur().equals(btn.getPiece().getCouleur()) )){
             btn.getPiece().setPositionsPossible(new ArrayList<>());
             positions = btn.getPiece().getPositionsPossible();
             pieceClick = btn.getPiece();
@@ -31,13 +32,14 @@ public class OnClickListeners implements ActionListener{
 
 
 
+
+
         if(btn.getPiece() == null || !btn.getPiece().getCouleur().equals(pieceClick.getCouleur())){
             for (Position pos: positions) {
                 if (btn.getPos().getX() == pos.getX() && btn.getPos().getY() == pos.getY()){
                     try {
                         pieceClick.deplacement(btn);
-                        btnClick.setPiece(null);
-                        btnClick.setText("");
+                        btnClick.initialize();
                         btnClick = null;
                         Echiquier.getInstance().refresh(btn);
                     } catch (ExceptionPosition exceptionPosition) {
@@ -54,10 +56,10 @@ public class OnClickListeners implements ActionListener{
         positions = btn.getPiece().getPositionsPossible();
         Echiquier.getInstance().afficherGrille(Echiquier.getInstance().getButton());
         btn.getPiece().positions();
-
         for (Case butt : button) {
             for (Position pos : positions) {
                 if (butt.getPos().getX() == pos.getX() && butt.getPos().getY() == pos.getY()) {
+                    System.out.println(pos);
                     butt.setBackground(Color.RED);
                 }
             }
