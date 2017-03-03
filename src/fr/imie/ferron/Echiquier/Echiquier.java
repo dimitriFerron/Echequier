@@ -37,7 +37,6 @@ public class Echiquier extends JFrame implements Serializable, ActionListener {
                         null, "Voulez-vous sauvegarder ?",
                         "Exit Confirmation", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, button, null);
-                System.out.println(confirm);
                 if (confirm == 0) {
                     try {
                         sauvegarder();
@@ -178,6 +177,15 @@ public class Echiquier extends JFrame implements Serializable, ActionListener {
                 ) {
             if(piece.memePosition(p)){
                 return piece;
+            }
+        }
+        return null;
+    }
+    public Case getCase(Position p){
+        for (Case butt: button
+                ) {
+            if(butt.getPos().getX() == p.getX() && butt.getPos().getY() == p.getY()){
+                return butt;
             }
         }
         return null;

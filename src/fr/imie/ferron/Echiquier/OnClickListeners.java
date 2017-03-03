@@ -32,19 +32,23 @@ public class OnClickListeners implements ActionListener{
 
 
         if(btn.getPiece() == null || !btn.getPiece().getCouleur().equals(pieceClick.getCouleur())){
+
+            System.out.println(btnClick.getPos()+"   " +btn.getPos());
+
             for (Position pos: positions) {
                 if (btn.getPos().getX() == pos.getX() && btn.getPos().getY() == pos.getY()){
                     try {
                         pieceClick.deplacement(btn);
-                        btnClick.initialize();
-                        btnClick = null;
-                        Echiquier.getInstance().refresh();
-                        Echiquier.getInstance().afficherGrille(Echiquier.getInstance().getButton());
                     } catch (ExceptionPosition exceptionPosition) {
                         exceptionPosition.printStackTrace();
                     }
                 }
             }
+            System.out.println(btnClick.getPos()+"   " +btn.getPos());
+            btnClick.initialize();
+            btnClick = null;
+            Echiquier.getInstance().refresh();
+            Echiquier.getInstance().afficherGrille(Echiquier.getInstance().getButton());
         } else {
             changeColor(btn);
         }

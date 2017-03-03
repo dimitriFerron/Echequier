@@ -55,7 +55,6 @@ public class Pion extends Piece{
                 if (this.getCouleur() == Couleur.BLANC) {
                     Position pos = new Position(position.getY()-1,position.getX());
                     if (this.memePosition(pos) || this.memePosition(new Position(position.getY()-2,position.getX()))) {
-                        System.out.println();
                         return true;
                     }
                 } else {
@@ -103,11 +102,11 @@ public class Pion extends Piece{
     @Override
     public void deplacement(Case btn) throws ExceptionPosition{
         if(positionPossible(btn.getPos())){
-            this.setPosition(btn.getPos());
-            System.out.println(this.getPosition());
+//            this.setPosition(btn.getPos());
             btn.setPiece(this);
+            Echiquier.getInstance().getCase(Echiquier.getInstance().getPiece(this.getPosition()).getPosition()).setPiece(null);
+            btn.getPiece().setPosition(btn.getPos());
             btn.setText(this.getSymbole());
-
         }
     }
 }

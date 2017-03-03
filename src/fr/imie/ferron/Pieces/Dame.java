@@ -26,7 +26,6 @@ public class Dame extends Piece{
             else {
                 if(this.getPosition().getY() != position.getY() && this.getPosition().getX() == position.getX()){
                     int indice = Math.abs(this.getPosition().getY()-position.getY()), i =1;
-                    System.out.println(indice);
 
                     while(Echiquier.getInstance().getPiece(new Position(this.getPosition().getY()+i,position.getX())) != null && i<indice){
                         if(Echiquier.getInstance().getPiece(new Position(this.getPosition().getY()+i,position.getX())).getCouleur() == this.getCouleur()){
