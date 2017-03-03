@@ -31,9 +31,6 @@ public class OnClickListeners implements ActionListener{
         }
 
 
-
-
-
         if(btn.getPiece() == null || !btn.getPiece().getCouleur().equals(pieceClick.getCouleur())){
             for (Position pos: positions) {
                 if (btn.getPos().getX() == pos.getX() && btn.getPos().getY() == pos.getY()){
@@ -41,7 +38,8 @@ public class OnClickListeners implements ActionListener{
                         pieceClick.deplacement(btn);
                         btnClick.initialize();
                         btnClick = null;
-                        Echiquier.getInstance().refresh(btn);
+                        Echiquier.getInstance().refresh();
+                        Echiquier.getInstance().afficherGrille(Echiquier.getInstance().getButton());
                     } catch (ExceptionPosition exceptionPosition) {
                         exceptionPosition.printStackTrace();
                     }
@@ -59,8 +57,8 @@ public class OnClickListeners implements ActionListener{
         for (Case butt : button) {
             for (Position pos : positions) {
                 if (butt.getPos().getX() == pos.getX() && butt.getPos().getY() == pos.getY()) {
-                    System.out.println(pos);
                     butt.setBackground(Color.RED);
+                    butt.setEnabled(true);
                 }
             }
         }

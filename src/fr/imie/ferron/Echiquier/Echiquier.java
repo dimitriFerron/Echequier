@@ -7,24 +7,28 @@ import fr.imie.ferron.Pieces.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Echiquier extends JFrame implements Serializable {
+public class Echiquier extends JFrame implements Serializable, ActionListener {
     private static Echiquier ourInstance = new Echiquier();
     private ArrayList<Piece> echec;
     private Case button[] = new Case[64];
     private OnClickListeners actionListener = new OnClickListeners();
+    private JMenuBar menuBar;
+    private JMenu fichier;
+    private JMenuItem quitter;
+    private JMenuItem rejouer ;
+    private JMenuItem sauvegarder;
+    private File save = new File("Echiquier.txt");
 
     public static Echiquier getInstance() {
         return ourInstance;
     }
     private Echiquier() {
         echec = new ArrayList<>();
-//        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        // paramètre frame
         WindowListener exitListener = new WindowAdapter(){
             String button[] = {"Quitter et sauvegarder","Quitter sans sauvegarder"};
             @Override
@@ -49,6 +53,26 @@ public class Echiquier extends JFrame implements Serializable {
         this.addWindowListener(exitListener);
         this.setSize(500,500);
         this.setLocationRelativeTo(null);
+
+        //menu
+        menuBar = new JMenuBar();
+        fichier = new JMenu("Fichier");
+        sauvegarder = new JMenuItem("Sauvegarder");
+        rejouer = new JMenuItem("Rejouer");
+        quitter = new JMenuItem("Quitter");
+
+        sauvegarder.addActionListener(this);
+        rejouer.addActionListener(this);
+        quitter.addActionListener(this);
+
+        fichier.add(rejouer);
+        fichier.add(sauvegarder);
+        fichier.add(quitter);
+        menuBar.add(fichier);
+
+        this.setJMenuBar(menuBar);
+
+        //initilisation
         this.setLayout(new GridLayout(8,8));
         initialize();
         afficher();
@@ -57,8 +81,7 @@ public class Echiquier extends JFrame implements Serializable {
     }
 
     public void initialize() {
-        File sauvegarde = new File("Echiquier.txt");
-        if(sauvegarde.exists()){
+        if(save.exists()){
             try {
                 chargement();
             } catch (IOException e) {
@@ -187,6 +210,7 @@ public class Echiquier extends JFrame implements Serializable {
             for (int j = 1; j < 9; j++) {
                 if (getPiece(plateau[indice]) == null) {
                     button[indice] = new Case(plateau[indice]);
+                    button[indice].setEnabled(false);
                 } else {
                     button[indice] = new Case(getPiece(plateau[indice]));
                 }
@@ -221,7 +245,7 @@ public class Echiquier extends JFrame implements Serializable {
 
         try{
 
-            objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File("Echiquier.txt"))));
+            objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(save)));
 
             objectOutputStream.writeObject(echec);
 
@@ -241,7 +265,7 @@ public class Echiquier extends JFrame implements Serializable {
         ObjectInputStream objectInputStream = null;
 
         try{
-            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("Echiquier.txt"))));
+            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(save)));
             echec.addAll((ArrayList)objectInputStream.readObject());
             objectInputStream.close();
 
@@ -261,19 +285,30 @@ public class Echiquier extends JFrame implements Serializable {
     public Case[] getButton() {
         return button;
     }
-    public void refresh(Case btn){
-        int r = 0;
+    public void refresh(){
         this.repaint();
         this.revalidate();
-        afficherGrille(Echiquier.getInstance().getButton());
+    }
 
-        if(getPoints(Couleur.BLANC) == 0){
-            JOptionPane win = new JOptionPane();
-            win.showMessageDialog(null,Couleur.BLANC+"Vous avez gagné !","Win",win.INFORMATION_MESSAGE);
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == rejouer){
+            save.delete();
+            this.removeAll();
+            this.initialize();
+            this.afficher();
+            this.afficherGrille(getButton());
+            this.refresh();
         }
-        if(getPoints(Couleur.NOIR) == 0){
-            JOptionPane win = new JOptionPane();
-            win.showMessageDialog(null,Couleur.NOIR+"Vous avez gagné !","Win",win.INFORMATION_MESSAGE);
+        if(actionEvent.getSource() == sauvegarder){
+            try {
+                sauvegarder();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(actionEvent.getSource() == quitter){
+            System.exit(0);
         }
     }
 }
