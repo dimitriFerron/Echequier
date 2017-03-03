@@ -7,6 +7,9 @@ import fr.imie.ferron.Pieces.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -21,7 +24,29 @@ public class Echiquier extends JFrame implements Serializable {
     }
     private Echiquier() {
         echec = new ArrayList<>();
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        WindowListener exitListener = new WindowAdapter(){
+            String button[] = {"Quitter et sauvegarder","Quitter sans sauvegarder"};
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showOptionDialog(
+                        null, "Voulez-vous sauvegarder ?",
+                        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, button, null);
+                System.out.println(confirm);
+                if (confirm == 0) {
+                    try {
+                        sauvegarder();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    System.exit(0);
+                } else {
+                    System.exit(0);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
         this.setSize(500,500);
         this.setLocationRelativeTo(null);
         this.setLayout(new GridLayout(8,8));
@@ -30,78 +55,88 @@ public class Echiquier extends JFrame implements Serializable {
         afficherGrille(getButton());
         this.setVisible(true);
     }
-    public void initialize(){
-        Pion pB1 = new Pion(new Position(2,1), Couleur.BLANC);
-        Pion pB2 = new Pion(new Position(2,2),Couleur.BLANC);
-        Pion pB3 = new Pion(new Position(2,3),Couleur.BLANC);
-        Pion pB4 = new Pion(new Position(2,4),Couleur.BLANC);
-        Pion pB5 = new Pion(new Position(2,5),Couleur.BLANC);
-        Pion pB6 = new Pion(new Position(2,6),Couleur.BLANC);
-        Pion pB7 = new Pion(new Position(2,7),Couleur.BLANC);
-        Pion pB8 = new Pion(new Position(2,8),Couleur.BLANC);
-        Pion pN1 = new Pion(new Position(7,1),Couleur.NOIR);
-        Pion pN2 = new Pion(new Position(7,2),Couleur.NOIR);
-        Pion pN3 = new Pion(new Position(7,3),Couleur.NOIR);
-        Pion pN4 = new Pion(new Position(7,4),Couleur.NOIR);
-        Pion pN5 = new Pion(new Position(7,5),Couleur.NOIR);
-        Pion pN6 = new Pion(new Position(7,6),Couleur.NOIR);
-        Pion pN7 = new Pion(new Position(7,7),Couleur.NOIR);
-        Pion pN8 = new Pion(new Position(7,8),Couleur.NOIR);
 
-        Dame dB = new Dame(new Position(1,4),Couleur.BLANC);
-        Dame dN = new Dame(new Position(8,4),Couleur.NOIR);
+    public void initialize() {
+        File sauvegarde = new File("Echiquier.txt");
+        if(sauvegarde.exists()){
+            try {
+                chargement();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Pion pB1 = new Pion(new Position(2, 1), Couleur.BLANC);
+            Pion pB2 = new Pion(new Position(2, 2), Couleur.BLANC);
+            Pion pB3 = new Pion(new Position(2, 3), Couleur.BLANC);
+            Pion pB4 = new Pion(new Position(2, 4), Couleur.BLANC);
+            Pion pB5 = new Pion(new Position(2, 5), Couleur.BLANC);
+            Pion pB6 = new Pion(new Position(2, 6), Couleur.BLANC);
+            Pion pB7 = new Pion(new Position(2, 7), Couleur.BLANC);
+            Pion pB8 = new Pion(new Position(2, 8), Couleur.BLANC);
+            Pion pN1 = new Pion(new Position(7, 1), Couleur.NOIR);
+            Pion pN2 = new Pion(new Position(7, 2), Couleur.NOIR);
+            Pion pN3 = new Pion(new Position(7, 3), Couleur.NOIR);
+            Pion pN4 = new Pion(new Position(7, 4), Couleur.NOIR);
+            Pion pN5 = new Pion(new Position(7, 5), Couleur.NOIR);
+            Pion pN6 = new Pion(new Position(7, 6), Couleur.NOIR);
+            Pion pN7 = new Pion(new Position(7, 7), Couleur.NOIR);
+            Pion pN8 = new Pion(new Position(7, 8), Couleur.NOIR);
 
-        Roi rB = new Roi(new Position(1,5),Couleur.BLANC);
-        Roi rN = new Roi(new Position(8,5),Couleur.NOIR);
+            Dame dB = new Dame(new Position(1, 4), Couleur.BLANC);
+            Dame dN = new Dame(new Position(8, 4), Couleur.NOIR);
 
-        Cavalier cB1 = new Cavalier(new Position(1,2),Couleur.BLANC);
-        Cavalier cB2 = new Cavalier(new Position(1,7),Couleur.BLANC);
-        Cavalier cN1 = new Cavalier(new Position(8,2),Couleur.NOIR);
-        Cavalier cN2 = new Cavalier(new Position(8,7),Couleur.NOIR);
+            Roi rB = new Roi(new Position(1, 5), Couleur.BLANC);
+            Roi rN = new Roi(new Position(8, 5), Couleur.NOIR);
 
-        Fou fB1 = new Fou(new Position(1,3),Couleur.BLANC);
-        Fou fB2 = new Fou(new Position(1,6),Couleur.BLANC);
-        Fou fN1 = new Fou(new Position(8,3),Couleur.NOIR);
-        Fou fN2 = new Fou(new Position(8,6),Couleur.NOIR);
+            Cavalier cB1 = new Cavalier(new Position(1, 2), Couleur.BLANC);
+            Cavalier cB2 = new Cavalier(new Position(1, 7), Couleur.BLANC);
+            Cavalier cN1 = new Cavalier(new Position(8, 2), Couleur.NOIR);
+            Cavalier cN2 = new Cavalier(new Position(8, 7), Couleur.NOIR);
 
-        Tour tB1 = new Tour(new Position(1,1),Couleur.BLANC);
-        Tour tB2 = new Tour(new Position(1,8),Couleur.BLANC);
-        Tour tN1 = new Tour(new Position(8,1),Couleur.NOIR);
-        Tour tN2 = new Tour(new Position(8,8),Couleur.NOIR);
+            Fou fB1 = new Fou(new Position(1, 3), Couleur.BLANC);
+            Fou fB2 = new Fou(new Position(1, 6), Couleur.BLANC);
+            Fou fN1 = new Fou(new Position(8, 3), Couleur.NOIR);
+            Fou fN2 = new Fou(new Position(8, 6), Couleur.NOIR);
+
+            Tour tB1 = new Tour(new Position(1, 1), Couleur.BLANC);
+            Tour tB2 = new Tour(new Position(1, 8), Couleur.BLANC);
+            Tour tN1 = new Tour(new Position(8, 1), Couleur.NOIR);
+            Tour tN2 = new Tour(new Position(8, 8), Couleur.NOIR);
 
 
-        echec.add(pB1);
-        echec.add(pB2);
-        echec.add(pB3);
-        echec.add(pB4);
-        echec.add(pB5);
-        echec.add(pB6);
-        echec.add(pB7);
-        echec.add(pB8);
-        echec.add(pN1);
-        echec.add(pN2);
-        echec.add(pN3);
-        echec.add(pN4);
-        echec.add(pN5);
-        echec.add(pN6);
-        echec.add(pN7);
-        echec.add(pN8);
-        echec.add(dB);
-        echec.add(dN);
-        echec.add(cB1);
-        echec.add(cB2);
-        echec.add(cN1);
-        echec.add(cN2);
-        echec.add(rB);
-        echec.add(rN);
-        echec.add(tB1);
-        echec.add(tB2);
-        echec.add(tN1);
-        echec.add(tN2);
-        echec.add(fB1);
-        echec.add(fB2);
-        echec.add(fN1);
-        echec.add(fN2);
+            echec.add(pB1);
+            echec.add(pB2);
+            echec.add(pB3);
+            echec.add(pB4);
+            echec.add(pB5);
+            echec.add(pB6);
+            echec.add(pB7);
+            echec.add(pB8);
+            echec.add(pN1);
+            echec.add(pN2);
+            echec.add(pN3);
+            echec.add(pN4);
+            echec.add(pN5);
+            echec.add(pN6);
+            echec.add(pN7);
+            echec.add(pN8);
+            echec.add(dB);
+            echec.add(dN);
+            echec.add(cB1);
+            echec.add(cB2);
+            echec.add(cN1);
+            echec.add(cN2);
+            echec.add(rB);
+            echec.add(rN);
+            echec.add(tB1);
+            echec.add(tB2);
+            echec.add(tN1);
+            echec.add(tN2);
+            echec.add(fB1);
+            echec.add(fB2);
+            echec.add(fN1);
+            echec.add(fN2);
+        }
     }
     public void ajouterPiece(Piece p)throws ExceptionPosition {
         if(p.getPosition().getX() >= 1 && p.getPosition().getX() <=8
@@ -186,7 +221,7 @@ public class Echiquier extends JFrame implements Serializable {
 
         try{
 
-            objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File("Echequier.txt"))));
+            objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File("Echiquier.txt"))));
 
             objectOutputStream.writeObject(echec);
 
@@ -206,7 +241,7 @@ public class Echiquier extends JFrame implements Serializable {
         ObjectInputStream objectInputStream = null;
 
         try{
-            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("Echequier.txt"))));
+            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("Echiquier.txt"))));
             echec.addAll((ArrayList)objectInputStream.readObject());
             objectInputStream.close();
 
