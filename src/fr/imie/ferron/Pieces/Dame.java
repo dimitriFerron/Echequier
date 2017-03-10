@@ -58,14 +58,6 @@ public class Dame extends Piece{
         return 9;
     }
     @Override
-    public void deplacement(Case btn) throws ExceptionPosition{
-        if(positionPossible(btn.getPos())){
-            this.setPosition(btn.getPos());
-            btn.setText(btn.getPiece().getSymbole());
-        }
-    }
-
-    @Override
     public void positions() {
 
     }

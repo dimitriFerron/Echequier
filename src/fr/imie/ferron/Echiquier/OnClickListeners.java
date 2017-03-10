@@ -50,7 +50,6 @@ public class OnClickListeners implements ActionListener{
         btnClick = null;
         for (Case butt : button) {
             for (Position pos : position) {
-                System.out.println(Echiquier.getInstance().getPiece(pos) +"     "+pos.getX()+"  "+pos.getY());
                 if (butt.getPos().getX() == pos.getX() && butt.getPos().getY() == pos.getY() && Echiquier.getInstance().getPiece(pos) == null) {
                     butt.setEnabled(false);
                 }
