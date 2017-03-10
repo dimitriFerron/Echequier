@@ -1,10 +1,8 @@
 package fr.imie.ferron.Pieces;
 
-import fr.imie.ferron.Echiquier.Case;
 import fr.imie.ferron.Echiquier.Echiquier;
 import fr.imie.ferron.Exceptions.ExceptionPosition;
 
-import java.util.ArrayList;
 
 /**
  * Created by ferron.cdi04 on 27/01/2017.

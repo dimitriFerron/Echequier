@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Echiquier extends JFrame implements Serializable, ActionListener {
     private static Echiquier ourInstance = new Echiquier();
     private ArrayList<Piece> echec;
-    private Case button[] = new Case[64];
+    private Case button[];
     private OnClickListeners actionListener = new OnClickListeners();
     private JMenuBar menuBar;
     private JMenu fichier;
@@ -27,7 +27,7 @@ public class Echiquier extends JFrame implements Serializable, ActionListener {
         return ourInstance;
     }
     private Echiquier() {
-        echec = new ArrayList<>();
+
         // paramètre frame
         WindowListener exitListener = new WindowAdapter(){
             String button[] = {"Quitter et sauvegarder","Quitter sans sauvegarder"};
@@ -72,14 +72,14 @@ public class Echiquier extends JFrame implements Serializable, ActionListener {
         this.setJMenuBar(menuBar);
 
         //initilisation
-        this.setLayout(new GridLayout(8,8));
         initialize();
-        afficher();
-        afficherGrille(getButton());
         this.setVisible(true);
     }
 
     public void initialize() {
+        button = new Case[64];
+        this.setLayout(new GridLayout(8,8));
+        echec = new ArrayList<>();
         if(save.exists()){
             try {
                 chargement();
@@ -159,6 +159,8 @@ public class Echiquier extends JFrame implements Serializable, ActionListener {
             echec.add(fN1);
             echec.add(fN2);
         }
+        afficher();
+        afficherGrille(getButton());
     }
     public void ajouterPiece(Piece p)throws ExceptionPosition {
         if(p.getPosition().getX() >= 1 && p.getPosition().getX() <=8
@@ -297,15 +299,12 @@ public class Echiquier extends JFrame implements Serializable, ActionListener {
         this.repaint();
         this.revalidate();
     }
-
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if(actionEvent.getSource() == rejouer){
             save.delete();
-            this.removeAll();
+//            this.removeAll();
             this.initialize();
-            this.afficher();
-            this.afficherGrille(getButton());
             this.refresh();
         }
         if(actionEvent.getSource() == sauvegarder){
