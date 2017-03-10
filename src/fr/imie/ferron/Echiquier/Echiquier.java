@@ -220,7 +220,7 @@ public class Echiquier extends JFrame implements Serializable, ActionListener {
                     button[indice] = new Case(plateau[indice]);
                     button[indice].setEnabled(false);
                 } else {
-                    button[indice] = new Case(getPiece(plateau[indice]));
+                    button[indice] = new Case(getPiece(plateau[indice]),plateau[indice]);
                 }
                 button[indice].addActionListener(actionListener);
                 this.getContentPane().add(button[indice]);

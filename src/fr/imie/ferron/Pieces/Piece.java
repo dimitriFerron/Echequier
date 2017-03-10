@@ -1,6 +1,7 @@
 package fr.imie.ferron.Pieces;
 
 import fr.imie.ferron.Echiquier.Case;
+import fr.imie.ferron.Echiquier.Echiquier;
 import fr.imie.ferron.Exceptions.ExceptionPosition;
 
 import java.io.Serializable;
@@ -23,7 +24,16 @@ public abstract class Piece implements Serializable{
     public abstract boolean positionPossible(Position position) throws ExceptionPosition;
     public abstract String getSymbole();
     public abstract int getValeur();
-    public abstract void deplacement(Case btn) throws ExceptionPosition;
+    public void deplacement(Case btn) throws ExceptionPosition{
+        btn.setPiece(this);
+        Echiquier.getInstance().getCase(this.getPosition()).setPiece(null);
+        Echiquier.getInstance().getCase(this.getPosition()).setText("");
+        Echiquier.getInstance().getCase(this.getPosition()).setEnabled(false);
+
+        btn.getPiece().setPosition(btn.getPos());
+        btn.setText(this.getSymbole());
+
+    }
     public abstract void positions();
     public Position getPosition() {
         return position;

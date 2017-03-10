@@ -48,14 +48,6 @@ public class Cavalier extends Piece{
     public int getValeur() {
         return 3;
     }
-    @Override
-    public void deplacement(Case btn) throws ExceptionPosition{
-        if(positionPossible(btn.getPos())){
-            this.setPosition(btn.getPos());
-            btn.setPiece(this);
-            btn.setText(this.getSymbole());
-        }
-    }
 
     @Override
     public void positions() {

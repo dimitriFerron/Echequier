@@ -99,14 +99,4 @@ public class Pion extends Piece{
     public int getValeur() {
         return 1;
     }
-    @Override
-    public void deplacement(Case btn) throws ExceptionPosition{
-        if(positionPossible(btn.getPos())){
-//            this.setPosition(btn.getPos());
-            btn.setPiece(this);
-            Echiquier.getInstance().getCase(Echiquier.getInstance().getPiece(this.getPosition()).getPosition()).setPiece(null);
-            btn.getPiece().setPosition(btn.getPos());
-            btn.setText(this.getSymbole());
-        }
-    }
 }
